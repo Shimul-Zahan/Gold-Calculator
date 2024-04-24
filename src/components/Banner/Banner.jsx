@@ -13,7 +13,7 @@ const Banner = () => {
 
   return (
     <>
-      <div className="max-w-[1200px] mx-auto justify-between mb-[60px] border mt-[102px] bg-[#005392] rounded-2xl">
+      <div className="max-w-[1200px] mx-auto justify-between mb-[60px] border mt-5 lg:mt-[10px] bg-[#005392] rounded-2xl">
         <div className="flex flex-wrap mt-14">
           <div className="p-5 md:w-[40%]">
             <div className="text-left mb-[40px] border-4 rounded-2xl py-2 px-3 bg-[#005392]">
@@ -24,10 +24,10 @@ const Banner = () => {
           </div>
           <div className="p-5 text-white  md:w-[60%] w-full">
             <div className="mb-[40px] border-4 rounded-2xl px-3 bg-[#005392] py-2">
-              <p className="lg:text-[35px] text-[20px]">
+              <p className="lg:text-[40px] text-[20px] text-center">
                 Рассчитать с высокой оценкой
               </p>
-              <div className="flex gap-8 md:gap-20 lg:px-9 px-2">
+              <div className="flex gap-8 md:gap-20 lg:px-9 px-2 bg-red-500">
                 <div>
                   {active === 1 && (
                     <div className="">
@@ -74,8 +74,9 @@ const Banner = () => {
                 <div className="lg:text-[53px]">x</div>
 
                 <div>
-                  <div>
-                    <input onChange={(e) => setValue(e.target.value)} type="text" name="" id="" className="lg:text-[48px]  placeholder:text-white bg-transparent border-none outline-none" placeholder="_|__гр." />
+                  <div className="flex justify-center items-end">
+                    <input onChange={(e) => setValue(e.target.value)} type="text" name="" id="" className="lg:text-[48px] w-32 bg-transparent border border-t-0 border-l-0 border-r-0 outline-none text-center" placeholder="0" />
+                    <h1 className="text-xl">rp</h1>
                   </div>
                   <p className="text-xs">весизделия</p>
                   <ul className="text-[15px] py-1 flex justify-start items-center gap-2 text-white px-1">
@@ -96,7 +97,6 @@ const Banner = () => {
                 low === 2 && <h1 className="text-center"><span className=" lg:text-[50px] font-semibold">{value * rp * 0.8}</span><small>₸</small></h1>
               }
             </div>
-+
           </div>
         </div>
         <div className="flex justify-between text-white -mt-36">

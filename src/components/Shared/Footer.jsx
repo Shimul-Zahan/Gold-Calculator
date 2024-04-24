@@ -15,7 +15,7 @@ const Footer = () => {
         </aside>
         <nav className="text-lg">
           <ul className="space-y-3">
-            <div className="hover:border-2 border-white px-2">
+            <div className="">
               Узнать задолженность
             </div>
             <div className="flex gap-4 px-3 text-xs">

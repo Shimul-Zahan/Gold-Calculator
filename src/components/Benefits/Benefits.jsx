@@ -1,6 +1,6 @@
 const Benefits = () => {
   return (
-    <div className="flex justify-center mt-6">
+    <div className="flex justify-center mt-6 pb-10">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-[#005392] text-white px-4 rounded-2xl w-9/12  pb-10">
         <div className="px-5">
         <div className="flex items-center mt-10 mb-5">

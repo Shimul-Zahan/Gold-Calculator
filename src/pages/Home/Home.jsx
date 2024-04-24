@@ -9,7 +9,6 @@ const Home = () => {
       <Banner />
       <ExtraSEction />
       <Benefits />
-      <Map />
     </div>
   )
 }
