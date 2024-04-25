@@ -20,16 +20,16 @@ const Navbar = () => {
   const handleDropDown = () => {
     setDropDown(!dropdownOpen);
   };
-
+  console.log(collapse);
 
   return (
     <>
-      <div className="bg-[#005392] z-50 relative">
-        <nav className="flex-no-wrap relative z-50 flex w-full items-center justify-between bg-transparent py-2 shadow-md shadow-black/5 md:flex-wrap lg:py-3.5">
-          <div className="flex w-full items-center justify-center md:max-w-7xl md:px-12 mx-auto z-50">
+      <div className="bg-[#005392] relative z-50 font-sans">
+        <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-transparent py-2 shadow-md shadow-black/5 md:flex-wrap lg:py-3.5">
+          <div className="flex w-full items-center justify-center md:max-w-7xl md:px-12 mx-auto">
             <button
               onClick={() => setCollapse(!collapse)}
-              className="border-0 w-full flex justify-between items-center bg-transparent px-2 text-white hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 z-50 relative lg:hidden"
+              className="border-0 w-full flex justify-between items-center bg-transparent px-2 text-white hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0  relative lg:hidden"
               type="button"
             >
               <FiAlignJustify size={25} />
@@ -37,12 +37,34 @@ const Navbar = () => {
                 <img src="https://i.ibb.co/zQcm2p9/logo.png" alt="" className="w-24" />
               </Link>
             </button>
-
-            <div className={`!visible ${collapse ? "top-11" : "-top-96"} absolute duration-500 md:static top-11 py-5 bg-[#005392] w-full md:w-auto border shadow-xl md:border-none md:shadow-none items-center px-3 lg:!flex lg:basis-auto`}
-            >
-              <ul className="flex mx-auto flex-col md:flex-row justify-center lg:gap-16 gap-5">
+            <div className={`absolute w-full duration-500 ${collapse ? 'top-12' : '-top-[500px]'} md:hidden bg-[#005392] p-5 shadow-xl border`}>
+              <ul className="space-y-2">
                 <li>
-                  <NavLink to="/adress" className=" text-white  p-1">
+                  <NavLink onClick={() => setCollapse(false)} to="/adress" className=" text-white p-1">
+                    Контакты
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink onClick={() => setCollapse(false)} to="/faq" className="text-white  p-1">
+                    Вопрос/Ответ
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink onClick={() => setCollapse(false)} to="/about" className="text-white  p-1">
+                    Компания
+                  </NavLink>
+                </li>
+                <li className="hidden lg:block">
+                  <Link to='/'>
+                    <img src="https://i.ibb.co/zQcm2p9/logo.png" alt="" className="w-48" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul className="hidden md:flex mx-auto md:flex-row justify-center items-center lg:gap-16 gap-5">
+                <li>
+                  <NavLink to="/adress" className=" text-white p-1">
                     Контакты
                   </NavLink>
                 </li>
@@ -58,7 +80,7 @@ const Navbar = () => {
                 </li>
                 <li className="hidden lg:block">
                   <Link to='/'>
-                    <img src="https://i.ibb.co/zQcm2p9/logo.png" alt="" className="w-32" />
+                    <img src="https://i.ibb.co/zQcm2p9/logo.png" alt="" className="w-48" />
                   </Link>
                 </li>
                 <li>
