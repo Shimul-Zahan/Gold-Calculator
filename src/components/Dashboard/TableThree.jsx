@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const TableThree = () => {
-    const [activeTable, setActiveTable] = useState("Table 2");
+    const [activeTable, setActiveTable] = useState("Table 3");
     const [openModal, setOpenModal] = useState(false);
     const [formData, setFormData] = useState({
         clientId: "",

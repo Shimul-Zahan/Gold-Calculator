@@ -1,45 +1,45 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const TableTwo = () => {
     const [activeTable, setActiveTable] = useState("Table 2");
     const [openModal, setOpenModal] = useState(false);
-    const [formData, setFormData] = useState({
-        clientId: "",
-        nationalId: "",
-        firstName: "",
-        lastName: "",
-        phone: "",
-    });
-
-    // Handler function to update form state
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-
+    const [tableData, setTableData] = useState([]);
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const LoanID = e.target.LoanID.value;
+        const ClientID = e.target.ClientID.value;
+        const LoanAmount = e.target.LoanAmount.value;
+        const DateIssued = e.target.DateIssued.value;
+        const DueDate = e.target.DueDate.value;
+        const InterestRate = e.target.InterestRate.value;
+        const InterestDue = e.target.InterestDue.value;
+        const LoanBalance = e.target.LoanBalance.value;
+        const Status = e.target.Status.value;
+        const ItemDescription = e.target.ItemDescription.value;
+
+        const data = {
+            LoanID,
+            ClientID,
+            LoanAmount,
+            DateIssued,
+            DueDate,
+            InterestRate,
+            InterestDue,
+            LoanBalance,
+            Status,
+            ItemDescription,
+        };
         try {
             const response = await axios.post(
-                "http://localhost:8080/tableOne",
-                formData
+                "http://localhost:8080/addTableTwoData",
+                data
             );
 
             console.log("Form submitted successfully!", response.data);
             alert("Form submitted successfully!");
             setOpenModal(false);
-            setFormData({
-                clientId: "",
-                nationalId: "",
-                firstName: "",
-                lastName: "",
-                phone: "",
-            });
         } catch (error) {
             if (error.response.status === 409) {
                 alert("Data Already Exits");
@@ -51,7 +51,12 @@ const TableTwo = () => {
     const handleSetActiveTable = (table) => {
         setActiveTable(table);
     };
-
+    useEffect(() => {
+        fetch("http://localhost:8080/getDataTableTwo")
+            .then((res) => res.json())
+            .then((data) => setTableData(data));
+    }, []);
+    console.log(tableData);
     return (
         <div className="lg:px-8 px-2">
             <div className="bg-[#005697] mt-5 pt-5 pb-8 lg:px-7 px-4 rounded-lg mb-5">
@@ -76,9 +81,7 @@ const TableTwo = () => {
                                                 : ""
                                         }`}
                                     >
-                                        <Link
-                                            to="/dashboard/tableTwo"
-                                        >
+                                        <Link to="/dashboard/tableTwo">
                                             Table 2
                                         </Link>
                                     </th>
@@ -89,9 +92,7 @@ const TableTwo = () => {
                                                 : ""
                                         }`}
                                     >
-                                        <Link
-                                            to="/dashboard/tableThree"
-                                        >
+                                        <Link to="/dashboard/tableThree">
                                             Table 3
                                         </Link>
                                     </th>
@@ -102,9 +103,7 @@ const TableTwo = () => {
                                                 : ""
                                         }`}
                                     >
-                                        <Link
-                                            to="/dashboard/tableFour"
-                                        >
+                                        <Link to="/dashboard/tableFour">
                                             Table 4
                                         </Link>
                                     </th>
@@ -164,126 +163,154 @@ const TableTwo = () => {
                                                         : "-translate-y-20 opacity-0 duration-150"
                                                 }`}
                                             >
-                                                <form
-                                                    onSubmit={handleSubmit}
-                                                    className="px-5 pb-5 pt-3 lg:pb-10 lg:pt-5 lg:px-10"
-                                                >
-                                                    <svg
-                                                        onClick={() =>
-                                                            setOpenModal(false)
-                                                        }
-                                                        className="mx-auto mr-0 w-10 cursor-pointer fill-black dark:fill-white"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
+                                                <div className="overflow-y-scroll">
+                                                    <form
+                                                        onSubmit={handleSubmit}
+                                                        className="px-5 pb-5 pt-3 lg:pb-10 lg:pt-5 lg:px-10"
                                                     >
-                                                        <g strokeWidth="0"></g>
-                                                        <g
-                                                            id="SVGRepo_tracerCarrier"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                        ></g>
-                                                        <g id="SVGRepo_iconCarrier">
-                                                            <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path>
-                                                        </g>
-                                                    </svg>
-                                                    <div className="">
-                                                        <label
-                                                            htmlFor="clientId"
-                                                            className="block"
+                                                        <svg
+                                                            onClick={() =>
+                                                                setOpenModal(
+                                                                    false
+                                                                )
+                                                            }
+                                                            className="mx-auto mr-0 w-10 cursor-pointer fill-black dark:fill-white"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
                                                         >
-                                                            Client ID
-                                                        </label>
-                                                        <input
-                                                            id="clientId"
-                                                            type="text"
-                                                            name="clientId"
-                                                            value={
-                                                                formData.clientId
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="Client ID"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                        />
+                                                            <g strokeWidth="0"></g>
+                                                            <g
+                                                                id="SVGRepo_tracerCarrier"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                            ></g>
+                                                            <g id="SVGRepo_iconCarrier">
+                                                                <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path>
+                                                            </g>
+                                                        </svg>
+                                                        <div className="flex justify-between gap-5">
+                                                            <div className="">
+                                                                <label
+                                                                    htmlFor="clientId"
+                                                                    className="block"
+                                                                >
+                                                                    LoanID
+                                                                </label>
+                                                                <input
+                                                                    id="LoanID"
+                                                                    type="text"
+                                                                    name="LoanID"
+                                                                    placeholder="LoanID"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                                />
 
-                                                        <label className="block">
-                                                            National ID
-                                                        </label>
-                                                        <input
-                                                            id="nationalId"
-                                                            type="text"
-                                                            name="nationalId"
-                                                            value={
-                                                                formData.nationalId
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="National ID"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
-                                                        />
+                                                                <label className="block">
+                                                                    ClientID
+                                                                </label>
+                                                                <input
+                                                                    id="nationalId"
+                                                                    type="text"
+                                                                    name="ClientID"
+                                                                    placeholder="ClientID"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
+                                                                />
 
-                                                        <label className="block">
-                                                            First Name
-                                                        </label>
-                                                        <input
-                                                            id="firstName"
-                                                            type="text"
-                                                            name="firstName"
-                                                            value={
-                                                                formData.firstName
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="First Name"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
-                                                        />
+                                                                <label className="block">
+                                                                    LoanAmount
+                                                                </label>
+                                                                <input
+                                                                    id="LoanAmount"
+                                                                    type="text"
+                                                                    name="LoanAmount"
+                                                                    placeholder="Loan Amount"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
+                                                                />
 
-                                                        <label className="block">
-                                                            Last Name
-                                                        </label>
-                                                        <input
-                                                            id="lastName"
-                                                            type="text"
-                                                            name="lastName"
-                                                            value={
-                                                                formData.lastName
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="Last Name"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                        />
+                                                                <label className="block">
+                                                                    DateIssued
+                                                                </label>
+                                                                <input
+                                                                    id="DateIssued"
+                                                                    type="text"
+                                                                    name="DateIssued"
+                                                                    placeholder="DateIssued"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                                />
 
-                                                        <label className="block">
-                                                            Contact Info
-                                                        </label>
-                                                        <input
-                                                            id="phone"
-                                                            type="text"
-                                                            name="phone"
-                                                            value={
-                                                                formData.phone
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="Contact number"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                        />
-                                                    </div>
-                                                    {/* button type will be submit for handling form submission*/}
-                                                    <button
-                                                        type="submit"
-                                                        className="relative py-2.5 px-5 rounded-lg mt-6 bg-green-500 text-white w-full drop-shadow-lg "
-                                                    >
-                                                        Submit
-                                                    </button>
-                                                </form>
+                                                                <label className="block">
+                                                                    DueDate
+                                                                </label>
+                                                                <input
+                                                                    id="DueDate"
+                                                                    type="text"
+                                                                    name="DueDate"
+                                                                    placeholder="DueDate"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                                />
+                                                            </div>
+                                                            <div className="">
+                                                                <label className="block">
+                                                                    InterestRate
+                                                                </label>
+                                                                <input
+                                                                    id="InterestRate"
+                                                                    type="text"
+                                                                    name="InterestRate"
+                                                                    placeholder="InterestRate"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                                />
+                                                                <label className="block">
+                                                                    InterestDue
+                                                                </label>
+                                                                <input
+                                                                    id="InterestDue"
+                                                                    type="text"
+                                                                    name="InterestDue"
+                                                                    placeholder="InterestDue"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                                />
+                                                                <label className="block">
+                                                                    LoanBalance
+                                                                </label>
+                                                                <input
+                                                                    id="LoanBalance"
+                                                                    type="text"
+                                                                    name="LoanBalance"
+                                                                    placeholder="LoanBalance"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                                />
+                                                                <label className="block">
+                                                                    Status
+                                                                </label>
+                                                                <input
+                                                                    id="Status"
+                                                                    type="text"
+                                                                    name="Status"
+                                                                    placeholder="Status"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                                />
+                                                                <label className="block">
+                                                                    ItemDescription
+                                                                </label>
+                                                                <input
+                                                                    id="ItemDescription"
+                                                                    type="text"
+                                                                    name="ItemDescription"
+                                                                    placeholder="ItemDescription"
+                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        {/* button type will be submit for handling form submission*/}
+                                                        <button
+                                                            type="submit"
+                                                            className="relative py-2.5 px-5 rounded-lg mt-6 bg-green-500 text-white w-full drop-shadow-lg "
+                                                        >
+                                                            Submit
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -294,66 +321,73 @@ const TableTwo = () => {
                             </div>
                         </div>
                         <div className="overflow-x-auto">
-                            {activeTable === "Table 1" && (
-                                <div className="overflow-x-auto">
-                                    <table className="w-full p-6 text-xs text-left whitespace-nowrap">
-                                        <colgroup>
-                                            <col className="w-5" />
-                                            <col />
-                                            <col />
-                                            <col />
-                                            <col />
-                                            <col />
-                                            <col className="w-5" />
-                                        </colgroup>
-                                        <thead>
-                                            <tr className="">
-                                                <th className="p-3">
-                                                    ClientID
-                                                </th>
-                                                <th className="p-3">
-                                                    National ID
-                                                </th>
-                                                <th className="p-3">
-                                                    FirstName
-                                                </th>
-                                                <th className="p-3">
-                                                    LastName
-                                                </th>
-                                                <th className="p-3">
-                                                    Contact Info
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="border-b ">
-                                            <tr>
-                                                <td className="px-3 py-2">
-                                                    <p>Dwight Adams</p>
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    <p>Dwight Adams</p>
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    <p className="">
-                                                        Spirit Media
-                                                    </p>
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    <p>555-873-9812</p>
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    <p>dwight@adams.com</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
-                            {activeTable === "Table 2" && (
+                            <div className="overflow-x-auto">
                                 <table className="w-full p-6 text-xs text-left whitespace-nowrap">
-                                    {/* Table 2 content */}
+                                    <colgroup>
+                                        <col className="w-5" />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col className="w-5" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr className="">
+                                            <th className="p-3">LoanID</th>
+                                            <th className="p-3">ClientID</th>
+                                            <th className="p-3">LoanAmount</th>
+                                            <th className="p-3">DateIssued</th>
+                                            <th className="p-3">DueDate</th>
+                                            <th className="p-3">
+                                                InterestRate
+                                            </th>
+                                            <th className="p-3">InterestDue</th>
+                                            <th className="p-3">LoanBalance</th>
+                                            <th className="p-3">Status</th>
+                                            <th className="p-3">
+                                                ItemDescription
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="border-b ">
+                                        {tableData.map((tr) => (
+                                            <tr key={tr._id}>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.LoanID}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.ClientID}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.LoanAmount}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.DateIssued}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.DueDate}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.InterestRate}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.InterestDue}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.LoanBalance}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.Status}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.ItemDescription}</p>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
                                 </table>
-                            )}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const TableFour = () => {
-    const [activeTable, setActiveTable] = useState("Table 2");
+    const [activeTable, setActiveTable] = useState("Table 4");
     const [openModal, setOpenModal] = useState(false);
     const [formData, setFormData] = useState({
         clientId: "",
@@ -60,7 +60,7 @@ const TableFour = () => {
                         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm overflow-x-auto">
                             <thead className="ltr:text-left rtl:text-right border-b overflow-x-auto">
                                 <tr>
-                                <th
+                                    <th
                                         className={`whitespace-nowrap px-4 py-2 font-medium text-gray-900 ${
                                             activeTable === "Table 1"
                                                 ? "bg-green-500"
@@ -76,9 +76,7 @@ const TableFour = () => {
                                                 : ""
                                         }`}
                                     >
-                                        <Link
-                                            to="/dashboard/tableTwo"
-                                        >
+                                        <Link to="/dashboard/tableTwo">
                                             Table 2
                                         </Link>
                                     </th>
@@ -89,9 +87,7 @@ const TableFour = () => {
                                                 : ""
                                         }`}
                                     >
-                                        <Link
-                                            to="/dashboard/tableThree"
-                                        >
+                                        <Link to="/dashboard/tableThree">
                                             Table 3
                                         </Link>
                                     </th>
@@ -102,9 +98,7 @@ const TableFour = () => {
                                                 : ""
                                         }`}
                                     >
-                                        <Link
-                                            to="/dashboard/tableFour"
-                                        >
+                                        <Link to="/dashboard/tableFour">
                                             Table 4
                                         </Link>
                                     </th>
@@ -294,66 +288,49 @@ const TableFour = () => {
                             </div>
                         </div>
                         <div className="overflow-x-auto">
-                            {activeTable === "Table 1" && (
-                                <div className="overflow-x-auto">
-                                    <table className="w-full p-6 text-xs text-left whitespace-nowrap">
-                                        <colgroup>
-                                            <col className="w-5" />
-                                            <col />
-                                            <col />
-                                            <col />
-                                            <col />
-                                            <col />
-                                            <col className="w-5" />
-                                        </colgroup>
-                                        <thead>
-                                            <tr className="">
-                                                <th className="p-3">
-                                                    ClientID
-                                                </th>
-                                                <th className="p-3">
-                                                    National ID
-                                                </th>
-                                                <th className="p-3">
-                                                    FirstName
-                                                </th>
-                                                <th className="p-3">
-                                                    LastName
-                                                </th>
-                                                <th className="p-3">
-                                                    Contact Info
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="border-b ">
-                                            <tr>
-                                                <td className="px-3 py-2">
-                                                    <p>Dwight Adams</p>
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    <p>Dwight Adams</p>
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    <p className="">
-                                                        Spirit Media
-                                                    </p>
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    <p>555-873-9812</p>
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    <p>dwight@adams.com</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
-                            {activeTable === "Table 2" && (
+                            <div className="overflow-x-auto">
                                 <table className="w-full p-6 text-xs text-left whitespace-nowrap">
-                                    {/* Table 2 content */}
+                                    <colgroup>
+                                        <col className="w-5" />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col className="w-5" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr className="">
+                                            <th className="p-3">ClientID</th>
+                                            <th className="p-3">National ID</th>
+                                            <th className="p-3">FirstName</th>
+                                            <th className="p-3">LastName</th>
+                                            <th className="p-3">
+                                                Contact Info
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="border-b ">
+                                        <tr>
+                                            <td className="px-3 py-2">
+                                                <p>Dwight Adams</p>
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <p>Dwight Adams</p>
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <p className="">Spirit Media</p>
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <p>555-873-9812</p>
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <p>dwight@adams.com</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-                            )}
+                            </div>
                         </div>
                     </div>
                 </div>
