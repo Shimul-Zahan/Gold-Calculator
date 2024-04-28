@@ -21,14 +21,18 @@ const TableTwo = () => {
             ValuationAmount,
             Condition,
         };
+
         try {
+            console.log(data);
             const response = await axios.post(
-                "http://localhost:8080/addTableTwoData",
+                "http://localhost:8080/addTableThree",
                 data
             );
 
             console.log("Form submitted successfully!", response.data);
             alert("Form submitted successfully!");
+            fetchTableData()
+            e.target.reset()
             setOpenModal(false);
         } catch (error) {
             if (error.response.status === 409) {
@@ -42,11 +46,13 @@ const TableTwo = () => {
         setActiveTable(table);
     };
     useEffect(() => {
-        fetch("http://localhost:8080/getDataTableTwo")
-            .then((res) => res.json())
-            .then((data) => setTableData(data));
-    }, []);
-    console.log(tableData);
+        fetchTableData()
+      }, []);
+      const fetchTableData = async () => {
+          const res = await fetch("http://localhost:8080/getDataTableThree");
+        const data = await res.json();
+        return setTableData(data);
+      };
     return (
         <div className="lg:px-8 px-2">
             <div className="bg-[#005697] mt-5 pt-5 pb-8 lg:px-7 px-4 rounded-lg mb-5">
@@ -66,13 +72,13 @@ const TableTwo = () => {
                                     </th>
                                     <th
                                         className={`whitespace-nowrap px-4 py-2 font-medium text-gray-900 ${
-                                            activeTable === "Table 3"
+                                            activeTable === "Table 2"
                                                 ? "bg-green-500"
                                                 : ""
                                         }`}
                                     >
                                         <Link to="/dashboard/tableTwo">
-                                            Table 3
+                                            Table 2
                                         </Link>
                                     </th>
                                     <th
@@ -179,66 +185,64 @@ const TableTwo = () => {
                                                                 <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path>
                                                             </g>
                                                         </svg>
-                                                        <div className="flex justify-between gap-5">
-                                                            <div className="">
-                                                                <label
-                                                                    htmlFor="CollateralID"
-                                                                    className="block"
-                                                                >
-                                                                    CollateralID
-                                                                </label>
-                                                                <input
-                                                                    id="CollateralID"
-                                                                    type="text"
-                                                                    name="CollateralID"
-                                                                    placeholder="CollateralID"
-                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                                />
+                                                        <div className="">
+                                                            <label
+                                                                htmlFor="CollateralID"
+                                                                className="block"
+                                                            >
+                                                                CollateralID
+                                                            </label>
+                                                            <input
+                                                                id="CollateralID"
+                                                                type="text"
+                                                                name="CollateralID"
+                                                                placeholder="CollateralID"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                            />
 
-                                                                <label className="block">
-                                                                    LoanID
-                                                                </label>
-                                                                <input
-                                                                    id="nationalId"
-                                                                    type="text"
-                                                                    name="LoanID"
-                                                                    placeholder="LoanID"
-                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
-                                                                />
+                                                            <label className="block">
+                                                                LoanID
+                                                            </label>
+                                                            <input
+                                                                id="nationalId"
+                                                                type="text"
+                                                                name="LoanID"
+                                                                placeholder="LoanID"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
+                                                            />
 
-                                                                <label className="block">
-                                                                    Description
-                                                                </label>
-                                                                <input
-                                                                    id="Description"
-                                                                    type="text"
-                                                                    name="Description"
-                                                                    placeholder="Loan Amount"
-                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
-                                                                />
+                                                            <label className="block">
+                                                                Description
+                                                            </label>
+                                                            <input
+                                                                id="Description"
+                                                                type="text"
+                                                                name="Description"
+                                                                placeholder="Loan Amount"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
+                                                            />
 
-                                                                <label className="block">
-                                                                    ValuationAmount
-                                                                </label>
-                                                                <input
-                                                                    id="ValuationAmount"
-                                                                    type="text"
-                                                                    name="ValuationAmount"
-                                                                    placeholder="ValuationAmount"
-                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                                />
+                                                            <label className="block">
+                                                                ValuationAmount
+                                                            </label>
+                                                            <input
+                                                                id="ValuationAmount"
+                                                                type="text"
+                                                                name="ValuationAmount"
+                                                                placeholder="ValuationAmount"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                            />
 
-                                                                <label className="block">
-                                                                    Condition
-                                                                </label>
-                                                                <input
-                                                                    id="Condition"
-                                                                    type="text"
-                                                                    name="Condition"
-                                                                    placeholder="Condition"
-                                                                    className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                                />
-                                                            </div>
+                                                            <label className="block">
+                                                                Condition
+                                                            </label>
+                                                            <input
+                                                                id="Condition"
+                                                                type="text"
+                                                                name="Condition"
+                                                                placeholder="Condition"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                            />
                                                         </div>
                                                         {/* button type will be submit for handling form submission*/}
                                                         <button
@@ -272,10 +276,14 @@ const TableTwo = () => {
                                     </colgroup>
                                     <thead>
                                         <tr className="">
-                                            <th className="p-3">CollateralID</th>
+                                            <th className="p-3">
+                                                CollateralID
+                                            </th>
                                             <th className="p-3">LoanID</th>
                                             <th className="p-3">Description</th>
-                                            <th className="p-3">ValuationAmount</th>
+                                            <th className="p-3">
+                                                ValuationAmount
+                                            </th>
                                             <th className="p-3">Condition</th>
                                         </tr>
                                     </thead>

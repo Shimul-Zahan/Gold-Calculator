@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const TableTwo = () => {
-    const [activeTable, setActiveTable] = useState("Table 2");
+    const [activeTable, setActiveTable] = useState("Table 4");
     const [openModal, setOpenModal] = useState(false);
     const [tableData, setTableData] = useState([]);
     const handleSubmit = async (e) => {
@@ -22,12 +22,14 @@ const TableTwo = () => {
         };
         try {
             const response = await axios.post(
-                "http://localhost:8080/addTableThreeData",
+                "http://localhost:8080/addTableFour",
                 data
             );
 
             console.log("Form submitted successfully!", response.data);
             alert("Form submitted successfully!");
+            fetchTableData()
+            e.target.reset()
             setOpenModal(false);
         } catch (error) {
             if (error.response.status === 409) {
@@ -40,17 +42,20 @@ const TableTwo = () => {
     const handleSetActiveTable = (table) => {
         setActiveTable(table);
     };
+
     useEffect(() => {
-        fetch("http://localhost:8080/getDataTableTwo")
-            .then((res) => res.json())
-            .then((data) => setTableData(data));
-    }, []);
-    console.log(tableData);
+        fetchTableData()
+      }, []);
+      const fetchTableData = async () => {
+          const res = await fetch("http://localhost:8080/getDataTableFour");
+        const data = await res.json();
+        return setTableData(data);
+      };
     return (
         <div className="lg:px-8 px-2">
             <div className="bg-[#005697] mt-5 pt-5 pb-8 lg:px-7 px-4 rounded-lg mb-5">
                 <div className="overflow-x-auto mt-3 rounded-lg">
-                    <div className="overflow-x-auto ">
+                <div className="overflow-x-auto ">
                         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm overflow-x-auto">
                             <thead className="ltr:text-left rtl:text-right border-b overflow-x-auto">
                                 <tr>
