@@ -1,45 +1,34 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const TableFour = () => {
-    const [activeTable, setActiveTable] = useState("Table 4");
+const TableTwo = () => {
+    const [activeTable, setActiveTable] = useState("Table 2");
     const [openModal, setOpenModal] = useState(false);
-    const [formData, setFormData] = useState({
-        clientId: "",
-        nationalId: "",
-        firstName: "",
-        lastName: "",
-        phone: "",
-    });
-
-    // Handler function to update form state
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-
+    const [tableData, setTableData] = useState([]);
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const PaymentID = e.target.PaymentID.value;
+        const LoanID = e.target.LoanID.value;
+        const PaymentDate = e.target.PaymentDate.value;
+        const Amount = e.target.Amount.value;
+        const PaymentType = e.target.PaymentType.value;
+        const data = {
+            PaymentID,
+            LoanID,
+            PaymentDate,
+            Amount,
+            PaymentType,
+        };
         try {
             const response = await axios.post(
-                "http://localhost:8080/tableOne",
-                formData
+                "http://localhost:8080/addTableThreeData",
+                data
             );
 
             console.log("Form submitted successfully!", response.data);
             alert("Form submitted successfully!");
             setOpenModal(false);
-            setFormData({
-                clientId: "",
-                nationalId: "",
-                firstName: "",
-                lastName: "",
-                phone: "",
-            });
         } catch (error) {
             if (error.response.status === 409) {
                 alert("Data Already Exits");
@@ -51,7 +40,12 @@ const TableFour = () => {
     const handleSetActiveTable = (table) => {
         setActiveTable(table);
     };
-
+    useEffect(() => {
+        fetch("http://localhost:8080/getDataTableTwo")
+            .then((res) => res.json())
+            .then((data) => setTableData(data));
+    }, []);
+    console.log(tableData);
     return (
         <div className="lg:px-8 px-2">
             <div className="bg-[#005697] mt-5 pt-5 pb-8 lg:px-7 px-4 rounded-lg mb-5">
@@ -158,126 +152,100 @@ const TableFour = () => {
                                                         : "-translate-y-20 opacity-0 duration-150"
                                                 }`}
                                             >
-                                                <form
-                                                    onSubmit={handleSubmit}
-                                                    className="px-5 pb-5 pt-3 lg:pb-10 lg:pt-5 lg:px-10"
-                                                >
-                                                    <svg
-                                                        onClick={() =>
-                                                            setOpenModal(false)
-                                                        }
-                                                        className="mx-auto mr-0 w-10 cursor-pointer fill-black dark:fill-white"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
+                                                <div className="overflow-y-scroll">
+                                                    <form
+                                                        onSubmit={handleSubmit}
+                                                        className="px-5 pb-5 pt-3 lg:pb-10 lg:pt-5 lg:px-10"
                                                     >
-                                                        <g strokeWidth="0"></g>
-                                                        <g
-                                                            id="SVGRepo_tracerCarrier"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                        ></g>
-                                                        <g id="SVGRepo_iconCarrier">
-                                                            <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path>
-                                                        </g>
-                                                    </svg>
-                                                    <div className="">
-                                                        <label
-                                                            htmlFor="clientId"
-                                                            className="block"
+                                                        <svg
+                                                            onClick={() =>
+                                                                setOpenModal(
+                                                                    false
+                                                                )
+                                                            }
+                                                            className="mx-auto mr-0 w-10 cursor-pointer fill-black dark:fill-white"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
                                                         >
-                                                            Client ID
-                                                        </label>
-                                                        <input
-                                                            id="clientId"
-                                                            type="text"
-                                                            name="clientId"
-                                                            value={
-                                                                formData.clientId
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="Client ID"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                        />
+                                                            <g strokeWidth="0"></g>
+                                                            <g
+                                                                id="SVGRepo_tracerCarrier"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                            ></g>
+                                                            <g id="SVGRepo_iconCarrier">
+                                                                <path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"></path>
+                                                            </g>
+                                                        </svg>
+                                                        <div className="">
+                                                            <label
+                                                                htmlFor="LoanID"
+                                                                className="block"
+                                                            >
+                                                                PaymentID
+                                                            </label>
+                                                            <input
+                                                                id="PaymentID"
+                                                                type="text"
+                                                                name="PaymentID"
+                                                                placeholder="PaymentID"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                            />
 
-                                                        <label className="block">
-                                                            National ID
-                                                        </label>
-                                                        <input
-                                                            id="nationalId"
-                                                            type="text"
-                                                            name="nationalId"
-                                                            value={
-                                                                formData.nationalId
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="National ID"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
-                                                        />
+                                                            <label className="block">
+                                                                LoanID
+                                                            </label>
+                                                            <input
+                                                                id="nationalId"
+                                                                type="text"
+                                                                name="LoanID"
+                                                                placeholder="LoanID"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
+                                                            />
 
-                                                        <label className="block">
-                                                            First Name
-                                                        </label>
-                                                        <input
-                                                            id="firstName"
-                                                            type="text"
-                                                            name="firstName"
-                                                            value={
-                                                                formData.firstName
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="First Name"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
-                                                        />
+                                                            <label className="block">
+                                                                PaymentDate
+                                                            </label>
+                                                            <input
+                                                                id="PaymentDate"
+                                                                type="text"
+                                                                name="PaymentDate"
+                                                                placeholder="Loan Amount"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black  "
+                                                            />
 
-                                                        <label className="block">
-                                                            Last Name
-                                                        </label>
-                                                        <input
-                                                            id="lastName"
-                                                            type="text"
-                                                            name="lastName"
-                                                            value={
-                                                                formData.lastName
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="Last Name"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                        />
+                                                            <label className="block">
+                                                                Amount
+                                                            </label>
+                                                            <input
+                                                                id="Amount"
+                                                                type="text"
+                                                                name="Amount"
+                                                                placeholder="Amount"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                            />
 
-                                                        <label className="block">
-                                                            Contact Info
-                                                        </label>
-                                                        <input
-                                                            id="phone"
-                                                            type="text"
-                                                            name="phone"
-                                                            value={
-                                                                formData.phone
-                                                            }
-                                                            onChange={
-                                                                handleInputChange
-                                                            }
-                                                            placeholder="Contact number"
-                                                            className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
-                                                        />
-                                                    </div>
-                                                    {/* button type will be submit for handling form submission*/}
-                                                    <button
-                                                        type="submit"
-                                                        className="relative py-2.5 px-5 rounded-lg mt-6 bg-green-500 text-white w-full drop-shadow-lg "
-                                                    >
-                                                        Submit
-                                                    </button>
-                                                </form>
+                                                            <label className="block">
+                                                                PaymentType
+                                                            </label>
+                                                            <input
+                                                                id="PaymentType"
+                                                                type="text"
+                                                                name="PaymentType"
+                                                                placeholder="PaymentType"
+                                                                className="block w-full rounded-lg p-3 pl-10 outline-none drop-shadow-lg bg-white text-black "
+                                                            />
+                                                        </div>
+                                                        {/* button type will be submit for handling form submission*/}
+                                                        <button
+                                                            type="submit"
+                                                            className="relative py-2.5 px-5 rounded-lg mt-6 bg-green-500 text-white w-full drop-shadow-lg "
+                                                        >
+                                                            Submit
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -301,33 +269,33 @@ const TableFour = () => {
                                     </colgroup>
                                     <thead>
                                         <tr className="">
-                                            <th className="p-3">ClientID</th>
-                                            <th className="p-3">National ID</th>
-                                            <th className="p-3">FirstName</th>
-                                            <th className="p-3">LastName</th>
-                                            <th className="p-3">
-                                                Contact Info
-                                            </th>
+                                            <th className="p-3">PaymentID</th>
+                                            <th className="p-3">LoanID</th>
+                                            <th className="p-3">PaymentDate</th>
+                                            <th className="p-3">Amount</th>
+                                            <th className="p-3">PaymentType</th>
                                         </tr>
                                     </thead>
                                     <tbody className="border-b ">
-                                        <tr>
-                                            <td className="px-3 py-2">
-                                                <p>Dwight Adams</p>
-                                            </td>
-                                            <td className="px-3 py-2">
-                                                <p>Dwight Adams</p>
-                                            </td>
-                                            <td className="px-3 py-2">
-                                                <p className="">Spirit Media</p>
-                                            </td>
-                                            <td className="px-3 py-2">
-                                                <p>555-873-9812</p>
-                                            </td>
-                                            <td className="px-3 py-2">
-                                                <p>dwight@adams.com</p>
-                                            </td>
-                                        </tr>
+                                        {tableData.map((tr) => (
+                                            <tr key={tr._id}>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.PaymentID}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.LoanID}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.PaymentDate}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.Amount}</p>
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <p>{tr.PaymentType}</p>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
@@ -339,4 +307,4 @@ const TableFour = () => {
     );
 };
 
-export default TableFour;
+export default TableTwo;
